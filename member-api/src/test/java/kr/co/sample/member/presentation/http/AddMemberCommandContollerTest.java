@@ -5,7 +5,6 @@
 package kr.co.sample.member.presentation.http;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,22 +17,19 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
 import kr.co.sample.member.domain.command.AddNewMember;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 @WebMvcTest
 @Import(AddMemberController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("AddMemberController Tests")
 class AddMemberCommandContollerTest {
-    @Autowired
-    private MockMvc mockMvc;
+    @Autowired private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext context;
+    @Autowired private WebApplicationContext context;
 
     @MockBean private CommandHandler<AddNewMember> commandHandler;
 
@@ -42,7 +38,11 @@ class AddMemberCommandContollerTest {
     @DisplayName("Member should be created.")
     void member_should_be_created() throws Exception {
         this.mockMvc
-                .perform(post("/member").contentType(MediaType.APPLICATION_JSON).with(csrf()).content("{\"name\":\"rocksea\", \"age\":20}"))
+                .perform(
+                        post("/member")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(csrf())
+                                .content("{\"name\":\"rocksea\", \"age\":20}"))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }

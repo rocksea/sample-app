@@ -39,10 +39,7 @@ subprojects {
 	apply plugin: 'com.diffplug.spotless'
 	apply plugin: 'jacoco'
 	apply from: '../spotless.gradle'
-
-	jacoco {
-		toolVersion = "0.8.5"
-	}
+	apply from: '../jacoco.gradle'
 
 	dependencies {
 		implementation('org.springframework.boot:spring-boot-starter')

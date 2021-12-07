@@ -1,0 +1,35 @@
+spotless {
+    java {
+        target project.fileTree(project.projectDir) {
+            include '**/*.java'
+            exclude '**/generated/**'
+            exclude '**/build/**'
+        }
+
+        removeUnusedImports()
+        googleJavaFormat("1.9")
+        trimTrailingWhitespace()
+        indentWithTabs(2)
+        indentWithSpaces(4)
+        endWithNewline()
+        licenseHeader '/*\n' +
+                ' * Copyright 2021 ROCKSEA. All rights Reserved.\n' +
+                ' * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.\n' +
+                ' */'
+
+        importOrder 'java', 'javax', 'org', 'com', 'com.diffplug', ''
+    }
+
+    format 'misc', {
+        target '**/*.gradle', '**/*.md', '**/.gitignore'
+        trimTrailingWhitespace()
+        indentWithTabs()
+        endWithNewline()
+    }
+
+    format 'xml', {
+        target '**/*.xml'
+        targetExclude '**/log4j2*.xml'
+        eclipseWtp('xml')
+    }
+}

@@ -1,0 +1,9 @@
+### IntelliJ ###
+.idea
+
+### Git ###
+.git
+.github
+
+### Others ###
+gradle.properties

@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  mysql:
+    container_name: sample-mysql
+    restart: always
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'sample'
+      MYSQL_USER: 'sample'
+      MYSQL_PASS: 'sample'
+    volumes:
+      - /opt/mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: sample-zookeeper
+    ports:
+      - '2181:2181'
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: sample-kafka
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_CREATE_TOPICS: 'sample:1:1'
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181

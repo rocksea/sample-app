@@ -1,0 +1,39 @@
+server:
+  forward-headers-strategy: FRAMEWORK
+  error:
+    whitelabel:
+      enabled: false
+  port: ${SERVER_PORT:8080}
+
+spring:
+  profiles:
+    active: default
+  datasource:
+    #initialization-mode: never
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: ${DB_DDL_AUTO:validate}
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+kafka:
+  bootstrap-servers: localhost:9092
+  username:
+  password:
+  enable:
+    auto:
+      commit: false
+  ackmode: MANUAL
+  offset.reset: latest
+
+management:
+  endpoints:
+    web:
+      base-path: /member/actuator
+      exposure:
+        include: health, info, metrics, prometheus

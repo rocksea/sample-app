@@ -17,7 +17,7 @@ import kr.co.sample.member.domain.query.MemberQueryResult;
 @RestController
 @RequestMapping(value = "/member", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GetMemberController {
-    final MemberQuery memberQuery;
+    private final MemberQuery memberQuery;
 
     public GetMemberController(MemberQuery memberQuery) {
         this.memberQuery = memberQuery;

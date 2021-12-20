@@ -22,6 +22,7 @@ plugins {
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+ext['log4j2.version'] = '2.15.0'
 
 allprojects {
 	repositories {

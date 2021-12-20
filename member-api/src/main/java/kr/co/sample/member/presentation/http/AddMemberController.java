@@ -16,7 +16,7 @@ import kr.co.sample.member.presentation.http.request.AddMemberParam;
 @RestController
 @RequestMapping(value = "/member")
 public class AddMemberController {
-    final CommandHandler<AddNewMember> addNewMemberCommandHandler;
+    private final CommandHandler<AddNewMember> addNewMemberCommandHandler;
 
     public AddMemberController(CommandHandler<AddNewMember> addNewMemberCommandHandler) {
         this.addNewMemberCommandHandler = addNewMemberCommandHandler;

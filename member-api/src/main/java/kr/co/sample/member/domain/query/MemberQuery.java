@@ -12,7 +12,7 @@ import kr.co.sample.member.domain.repository.MemberRepository;
 
 @Service
 public class MemberQuery {
-    final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public MemberQuery(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;

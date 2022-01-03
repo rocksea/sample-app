@@ -24,7 +24,7 @@ public class AddMemberController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addMember(@Valid @RequestBody AddMemberParam memberParam) {
+    public void addNewMember(@Valid @RequestBody AddMemberParam memberParam) {
         AddNewMember addNewMember =
                 AddNewMember.builder().name(memberParam.getName()).age(memberParam.getAge()).build();
         addNewMemberCommandHandler.handle(addNewMember);

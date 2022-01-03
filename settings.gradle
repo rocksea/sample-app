@@ -8,4 +8,5 @@ pluginManagement {
 rootProject.name = 'sample_app'
 include 'member-api'
 include 'core'
+include 'coupon-api'
 

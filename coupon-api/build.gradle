@@ -10,28 +10,7 @@ repositories {
 	mavenCentral()
 }
 
-def queryDslVersion = '5.0.0'
-def queryDslGenerated = "$buildDir/generated/querydsl"
-
-querydsl {
-	jpa = true
-	querydslSourcesDir = queryDslGenerated
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
-}
-
-sourceSets {
-	main.java.srcDir queryDslGenerated
-}
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
-}
+apply from: './querydsl.gradle'
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -39,8 +18,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation('org.springframework.boot:spring-boot-starter-validation')
 	implementation(project(':core'))
-	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion
-	implementation group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	runtimeOnly('mysql:mysql-connector-java')
 	runtimeOnly('com.h2database:h2')
@@ -49,15 +26,6 @@ dependencies {
 	testImplementation('org.springframework.security:spring-security-test')
 	testImplementation('com.h2database:h2')
 
-}
-
-compileQuerydsl.doFirst {
-	if ( file(queryDslGenerated).exists() )
-		delete(file(queryDslGenerated))
-}
-
-tasks.withType(JavaCompile) {
-	options.generatedSourceOutputDirectory = file(queryDslGenerated)
 }
 
 test {

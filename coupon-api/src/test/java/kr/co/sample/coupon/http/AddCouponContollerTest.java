@@ -54,7 +54,7 @@ class AddCouponContollerTest {
     @Test
     @WithMockUser
     @DisplayName("AddCoupon should be failed.")
-    void add_coupon_should_be_failed() throws Exception {
+    void addCoupon_should_be_failed() throws Exception {
         this.mockMvc
                 .perform(post("/coupon").contentType(MediaType.APPLICATION_JSON).with(csrf()).content(""))
                 .andDo(print())

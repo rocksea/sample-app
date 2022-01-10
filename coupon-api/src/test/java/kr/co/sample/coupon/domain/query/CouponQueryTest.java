@@ -4,7 +4,10 @@
  */
 package kr.co.sample.coupon.domain.query;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,28 +16,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import kr.co.sample.core.cqrs.command.CommandHandler;
+import kr.co.sample.coupon.domain.aggregate.BasicCoupon;
 import kr.co.sample.coupon.domain.aggregate.Coupon;
-import kr.co.sample.coupon.domain.command.AddNewCoupon;
-import kr.co.sample.coupon.domain.command.AddNewCouponHandler;
-import kr.co.sample.coupon.domain.repository.CouponRepository;
 import kr.co.sample.coupon.domain.vo.CouponType;
 import kr.co.sample.coupon.domain.vo.DiscountType;
+import kr.co.sample.coupon.infrastructure.CouponQueryRepository;
 
 @ExtendWith({MockitoExtension.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("AddNewCouponCommand Tests")
+@DisplayName("CouponQueryService Tests")
 public class CouponQueryTest {
-    @Mock private CouponRepository couponRepository;
+    @Mock private CouponQueryRepository couponQueryRepository;
 
     @Test
-    @DisplayName("addNewCoupon_should_be_succeeded test")
-    public void addNewCoupon_should_be_succeeded() {
-        when(couponRepository.save(any(Coupon.class))).thenReturn(any(Coupon.class));
-        CommandHandler<AddNewCoupon> addNewMemberCommandHandler =
-                new AddNewCouponHandler(couponRepository);
-        AddNewCoupon addNewCoupon =
-                AddNewCoupon.builder()
+    @DisplayName("basicCoupon_should_be_found test")
+    public void basicCoupon_should_be_found() {
+        Coupon basicCoupon =
+                BasicCoupon.builder()
                         .id(1)
                         .couponType(CouponType.BASIC)
                         .discountType(DiscountType.AMOUNT)
@@ -42,8 +40,15 @@ public class CouponQueryTest {
                         .rate((short) 0)
                         .name("rocksea's coupon")
                         .build();
-        addNewMemberCommandHandler.handle(addNewCoupon);
 
-        verify(couponRepository, times(1)).save(any(Coupon.class));
+        when(couponQueryRepository.findCouponById(anyInt())).thenReturn(Optional.of(basicCoupon));
+        CouponQueryService couponQueryService = new CouponQueryService(couponQueryRepository);
+
+        CouponQueryResult couponQueryResult = couponQueryService.getCouponById(basicCoupon.getId());
+        verify(couponQueryRepository, times(1)).findCouponById(anyInt());
+
+        assertThat(couponQueryResult).isNotNull();
+        assertThat(couponQueryResult.getId()).isEqualTo(basicCoupon.getId());
+        assertThat(couponQueryResult.getCouponType()).isEqualTo(basicCoupon.getCouponType());
     }
 }

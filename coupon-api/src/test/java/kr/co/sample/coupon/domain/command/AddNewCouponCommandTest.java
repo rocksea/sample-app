@@ -26,7 +26,8 @@ public class AddNewCouponCommandTest {
     @Mock private CouponRepository couponRepository;
 
     @Test
-    public void addNewCoupon_should_be_succeeded() {
+    @DisplayName("Add New Coupon Should Be Created Tests")
+    public void addNewCoupon_should_be_created() {
         when(couponRepository.save(any(Coupon.class))).thenReturn(any(Coupon.class));
         CommandHandler<AddNewCoupon> addNewMemberCommandHandler =
                 new AddNewCouponHandler(couponRepository);

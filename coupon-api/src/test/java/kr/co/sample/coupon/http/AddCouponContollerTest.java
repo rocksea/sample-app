@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
 import kr.co.sample.coupon.domain.command.AddNewCoupon;
-import kr.co.sample.coupon.presentation.AddCouponController;
+import kr.co.sample.coupon.presentation.http.AddCouponController;
 
 @WebMvcTest
 @Import(AddCouponController.class)
@@ -42,7 +42,11 @@ class AddCouponContollerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .with(csrf())
                                 .content(
-                                        "{\"name\":\"rocksea's coupon\", \"member\":{\"name\":\"rocksea\", \"age\": 19 }}"))
+                                        "{\"name\":\"rocksea's coupon\" "
+                                                + ", \"couponType\":\"BASIC\""
+                                                + ", \"discountType\":\"AMOUNT\""
+                                                + ", \"amount\":100"
+                                                + ", \"memberIds\":[1,2,3]}"))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }

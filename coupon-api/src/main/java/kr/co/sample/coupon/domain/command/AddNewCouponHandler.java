@@ -4,14 +4,14 @@
  */
 package kr.co.sample.coupon.domain.command;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
-import kr.co.sample.coupon.domain.Coupon;
-import kr.co.sample.coupon.domain.CouponFactory;
+import kr.co.sample.coupon.domain.aggregate.Coupon;
+import kr.co.sample.coupon.domain.aggregate.CouponFactory;
 import kr.co.sample.coupon.domain.repository.CouponRepository;
 
-@Component
+@Service
 public class AddNewCouponHandler implements CommandHandler<AddNewCoupon> {
     private final CouponRepository couponRepository;
 
@@ -21,12 +21,7 @@ public class AddNewCouponHandler implements CommandHandler<AddNewCoupon> {
 
     @Override
     public void handle(AddNewCoupon command) {
-        Coupon coupon =
-                CouponFactory.of(
-                        command.getName(),
-                        command.getMember().getMemberId(),
-                        command.getMember().getName(),
-                        command.getMember().getAge());
+        Coupon coupon = CouponFactory.createFrom(command);
         couponRepository.save(coupon);
     }
 }

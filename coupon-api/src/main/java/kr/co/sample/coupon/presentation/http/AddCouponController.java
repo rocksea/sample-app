@@ -2,7 +2,7 @@
  * Copyright 2021 ROCKSEA. All rights Reserved.
  * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package kr.co.sample.coupon.presentation;
+package kr.co.sample.coupon.presentation.http;
 
 import javax.validation.Valid;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
 import kr.co.sample.coupon.domain.command.AddNewCoupon;
-import kr.co.sample.coupon.presentation.request.AddCouponParam;
+import kr.co.sample.coupon.presentation.http.request.AddCouponParam;
 
 @RestController
 @RequestMapping(value = "/coupon")
@@ -26,7 +26,15 @@ public class AddCouponController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewCoupon(@Valid @RequestBody AddCouponParam couponParam) {
         AddNewCoupon addNewCoupon =
-                AddNewCoupon.builder().name(couponParam.getName()).member(couponParam.getMember()).build();
+                AddNewCoupon.builder()
+                        .name(couponParam.getName())
+                        .couponType(couponParam.getCouponType())
+                        .discountType(couponParam.getDiscountType())
+                        .rate(couponParam.getRate())
+                        .amount(couponParam.getAmount())
+                        .memberIds(couponParam.getMemberIds())
+                        .productIds(couponParam.getProductIds())
+                        .build();
         addNewCouponCommandHandler.handle(addNewCoupon);
     }
 }

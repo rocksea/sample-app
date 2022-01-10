@@ -6,6 +6,6 @@ package kr.co.sample.coupon.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.co.sample.coupon.domain.Coupon;
+import kr.co.sample.coupon.domain.aggregate.Coupon;
 
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {}

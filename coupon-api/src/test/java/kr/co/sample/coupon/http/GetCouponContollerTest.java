@@ -22,11 +22,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import kr.co.sample.coupon.domain.query.CouponQuery;
 import kr.co.sample.coupon.domain.query.CouponQueryResult;
+import kr.co.sample.coupon.domain.query.CouponQueryService;
 import kr.co.sample.coupon.domain.query.exception.CouponNotFoundException;
 import kr.co.sample.coupon.domain.query.exception.CouponNotFoundExceptionHandler;
-import kr.co.sample.coupon.presentation.GetCouponController;
+import kr.co.sample.coupon.presentation.http.GetCouponController;
 
 @WebMvcTest
 @Import({GetCouponController.class, CouponNotFoundExceptionHandler.class})
@@ -37,7 +37,7 @@ class GetCouponContollerTest {
 
     @Autowired private WebApplicationContext context;
 
-    @MockBean private CouponQuery couponQuery;
+    @MockBean private CouponQueryService couponQuery;
 
     @Test
     @WithMockUser

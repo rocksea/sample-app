@@ -5,7 +5,7 @@
 package kr.co.sample.coupon.infrastructure;
 
 import static kr.co.sample.coupon.domain.aggregate.QCoupon.coupon;
-import static kr.co.sample.coupon.domain.aggregate.QTargetCoupon.targetCoupon;
+import static kr.co.sample.coupon.domain.entity.QTargetCoupon.targetCoupon;
 
 import java.util.Optional;
 

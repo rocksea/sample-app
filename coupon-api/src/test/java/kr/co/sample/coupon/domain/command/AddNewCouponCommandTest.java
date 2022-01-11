@@ -26,8 +26,8 @@ public class AddNewCouponCommandTest {
     @Mock private CouponRepository couponRepository;
 
     @Test
-    @DisplayName("Add New Coupon Should Be Created Tests")
-    public void addNewCoupon_should_be_created() {
+    @DisplayName("새로운 베이직쿠폰이 등록되어야한다")
+    public void basicCoupon_should_be_created() {
         when(couponRepository.save(any(Coupon.class))).thenReturn(any(Coupon.class));
         CommandHandler<AddNewCoupon> addNewMemberCommandHandler =
                 new AddNewCouponHandler(couponRepository);
@@ -35,6 +35,26 @@ public class AddNewCouponCommandTest {
                 AddNewCoupon.builder()
                         .id(1)
                         .couponType(CouponType.BASIC)
+                        .discountType(DiscountType.AMOUNT)
+                        .amount(1000)
+                        .rate((short) 0)
+                        .name("rocksea's coupon")
+                        .build();
+        addNewMemberCommandHandler.handle(addNewCoupon);
+
+        verify(couponRepository, times(1)).save(any(Coupon.class));
+    }
+
+    @Test
+    @DisplayName("새로운 타겟쿠폰이 등록되어야한다")
+    public void targetCoupon_should_be_created() {
+        when(couponRepository.save(any(Coupon.class))).thenReturn(any(Coupon.class));
+        CommandHandler<AddNewCoupon> addNewMemberCommandHandler =
+                new AddNewCouponHandler(couponRepository);
+        AddNewCoupon addNewCoupon =
+                AddNewCoupon.builder()
+                        .id(1)
+                        .couponType(CouponType.TARGET)
                         .discountType(DiscountType.AMOUNT)
                         .amount(1000)
                         .rate((short) 0)

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
 import kr.co.sample.coupon.domain.aggregate.Coupon;
-import kr.co.sample.coupon.domain.aggregate.CouponFactory;
+import kr.co.sample.coupon.domain.factory.CouponFactory;
 import kr.co.sample.coupon.domain.repository.CouponRepository;
 
 @Service

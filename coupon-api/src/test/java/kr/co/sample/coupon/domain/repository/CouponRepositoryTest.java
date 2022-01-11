@@ -7,8 +7,6 @@ package kr.co.sample.coupon.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,12 +15,13 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
-import kr.co.sample.coupon.domain.aggregate.BasicCoupon;
 import kr.co.sample.coupon.domain.aggregate.Coupon;
+import kr.co.sample.coupon.domain.entity.BasicCoupon;
 import kr.co.sample.coupon.domain.vo.CouponType;
 import kr.co.sample.coupon.domain.vo.DiscountType;
 
@@ -50,18 +49,25 @@ public class CouponRepositoryTest {
 
     @Test
     @Rollback(false)
-    @DisplayName("BasicCoupon Insert test")
-    public void basicCouponShouldBeSaved() {
+    @DisplayName("베이직쿠폰이 입력되어야한다")
+    public void basicCoupon_should_be_inserted() {
         Coupon savedCoupon = couponRepository.save(basicCoupon);
         assertThat(basicCoupon).isNotNull().isEqualTo(savedCoupon);
+    }
+
+    @Test
+    @Rollback(false)
+    @DisplayName("베이직쿠폰이 삭제되어야한다")
+    public void basicCoupon_should_be_deleted() {
         couponRepository.delete(basicCoupon);
     }
 
     @Test
-    @DisplayName("BasicCoupon Delete test")
-    public void basicCouponShouldBeDeleted() {
+    @DisplayName("베이직쿠폰이 조회 시 예외가 발생해야한다")
+    public void basicCoupon_should_not_be_found() {
+        couponRepository.delete(basicCoupon);
         assertThrows(
-                EntityNotFoundException.class,
+                InvalidDataAccessApiUsageException.class,
                 () -> {
                     Coupon deletedCoupon = couponRepository.getById(basicCoupon.getId());
                     assertThat(deletedCoupon).isNull();

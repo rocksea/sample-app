@@ -13,9 +13,10 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-@Getter
 @Entity
+@Getter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@EqualsAndHashCode(of = "id", callSuper = false)
 @DiscriminatorColumn(name = "DTYPE")
 public abstract class Coupon extends BaseEntity {
     @Id @GeneratedValue private Integer id;

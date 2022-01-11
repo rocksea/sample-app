@@ -19,6 +19,9 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(of = "id", callSuper = false)
 @DiscriminatorColumn(name = "DTYPE")
 public abstract class Coupon extends BaseEntity {
+    // @EmbeddedId
+    // private CouponId id;
+
     @Id @GeneratedValue private Integer id;
 
     private CouponType couponType;

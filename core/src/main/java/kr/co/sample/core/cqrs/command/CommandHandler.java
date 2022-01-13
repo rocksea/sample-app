@@ -4,6 +4,6 @@
  */
 package kr.co.sample.core.cqrs.command;
 
-public interface CommandHandler<E> {
-    void handle(E command);
+public interface CommandHandler<Command> {
+    void handle(Command command);
 }

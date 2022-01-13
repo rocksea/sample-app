@@ -1,4 +1,5 @@
 server:
+  shutdown: graceful
   forward-headers-strategy: FRAMEWORK
   error:
     whitelabel:

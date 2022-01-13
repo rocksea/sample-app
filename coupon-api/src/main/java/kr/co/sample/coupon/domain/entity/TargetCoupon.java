@@ -25,7 +25,7 @@ public class TargetCoupon extends Coupon {
     public TargetCoupon() {}
 
     public boolean isIssuable(Integer memberId) {
-        if (targetMemberIds == null && targetMemberIds.isEmpty()) return false;
+        if (targetMemberIds == null || targetMemberIds.isEmpty()) return false;
         return targetMemberIds.contains(memberId);
     }
 }

@@ -7,15 +7,13 @@ package kr.co.sample.coupon.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import javax.persistence.EntityNotFoundException;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,6 +27,7 @@ import kr.co.sample.coupon.domain.vo.DiscountType;
 @EnableJpaRepositories(basePackages = {"kr.co.sample.coupon.*"})
 @EntityScan("kr.co.sample.coupon")
 @ActiveProfiles("test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 @DisplayName("CouponRepository Tests")
 public class CouponRepositoryTest {
@@ -48,6 +47,7 @@ public class CouponRepositoryTest {
     }
 
     @Test
+    @Order(1)
     @Rollback(false)
     @DisplayName("베이직쿠폰이 입력되어야한다")
     public void basicCoupon_should_be_inserted() {
@@ -56,6 +56,7 @@ public class CouponRepositoryTest {
     }
 
     @Test
+    @Order(2)
     @Rollback(false)
     @DisplayName("베이직쿠폰이 삭제되어야한다")
     public void basicCoupon_should_be_deleted() {
@@ -63,11 +64,11 @@ public class CouponRepositoryTest {
     }
 
     @Test
+    @Order(3)
     @DisplayName("베이직쿠폰이 조회 시 예외가 발생해야한다")
     public void basicCoupon_should_not_be_found() {
-        couponRepository.delete(basicCoupon);
         assertThrows(
-                InvalidDataAccessApiUsageException.class,
+                EntityNotFoundException.class,
                 () -> {
                     Coupon deletedCoupon = couponRepository.getById(basicCoupon.getId());
                     assertThat(deletedCoupon).isNull();

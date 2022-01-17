@@ -25,7 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import kr.co.sample.member.domain.query.MemberQuery;
 import kr.co.sample.member.domain.query.MemberQueryResult;
 import kr.co.sample.member.domain.query.exception.MemberNotFoundException;
-import kr.co.sample.member.domain.query.exception.MemberNotFoundExceptionHandler;
+import kr.co.sample.member.presentation.http.exception.MemberNotFoundExceptionHandler;
 
 @WebMvcTest
 @Import({GetMemberController.class, MemberNotFoundExceptionHandler.class})

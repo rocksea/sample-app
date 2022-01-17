@@ -2,13 +2,15 @@
  * Copyright 2021 ROCKSEA. All rights Reserved.
  * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package kr.co.sample.coupon.domain.query.exception;
+package kr.co.sample.coupon.presentation.http.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import kr.co.sample.coupon.domain.query.exception.CouponIsNotIssuableException;
+import kr.co.sample.coupon.domain.query.exception.CouponNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

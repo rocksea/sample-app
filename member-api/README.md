@@ -24,7 +24,7 @@ $ docker build -t xxxxxxx.dkr.ecr.ap-northeast-2.amazonaws.com/sample-member-api
 $ docker push xxxxxxx.dkr.ecr.ap-northeast-2.amazonaws.com/sample-member-api
 ```
 
-### Installing a Helmchart
+### Installing a chart
 ```shell
 helm install member-api ./member-api -n sample
 

@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ${TAG_NAME}
-  port: 8080
+  port: 8081
 
 imagePullSecrets: []
 nameOverride: ""
@@ -40,7 +40,7 @@ securityContext: {}
 service:
   type: NodePort
   port: 80
-  targetPort: 8080
+  targetPort: 8081
 
 ingress:
   enabled: false
@@ -51,7 +51,7 @@ ingress:
   hosts:
     - host: sample.co.kr
       paths:
-        - path: /member
+        - path: /coupon
           pathType: Prefix
           # pathType: ImplementationSpecific
   tls: []

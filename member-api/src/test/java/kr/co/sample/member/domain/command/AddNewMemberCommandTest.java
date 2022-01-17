@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
 import kr.co.sample.member.domain.Member;
@@ -22,13 +23,14 @@ import kr.co.sample.member.domain.repository.MemberRepository;
 @DisplayName("AddNewMemberCommand Tests")
 public class AddNewMemberCommandTest {
     @Mock private MemberRepository memberRepository;
+    @Mock private KafkaTemplate<String, String> kafkaTemplate;
 
     @Test
     @DisplayName("AddNewMember should be succeeded.")
     public void addNewMember_should_be_succeeded() {
         when(memberRepository.save(any(Member.class))).thenReturn(any(Member.class));
         CommandHandler<AddNewMember> addNewMemberCommandHandler =
-                new AddNewMemberHandler(memberRepository);
+                new AddNewMemberHandler(memberRepository, kafkaTemplate);
         AddNewMember addNewMember = AddNewMember.builder().id(1).name("rocksea").age(19).build();
         addNewMemberCommandHandler.handle(addNewMember);
 

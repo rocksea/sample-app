@@ -21,16 +21,17 @@ spring:
     hibernate:
       ddl-auto: ${DB_DDL_AUTO:validate}
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
-kafka:
-  bootstrap-servers: localhost:9092
-  username:
-  password:
-  enable:
-    auto:
-      commit: false
-  ackmode: MANUAL
-  offset.reset: latest
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+      group-id: member
+      # auto-offset-reset: earliest
+      # key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+      # key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 management:
   endpoints:

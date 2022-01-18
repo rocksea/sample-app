@@ -10,5 +10,6 @@ spec:
     - port: {{ .Values.service.port }}
       protocol: TCP
       targetPort: {{ .Values.service.targetPort }}
+      name: http
   selector:
     {{- include "coupon-api.selectorLabels" . | nindent 4 }}

@@ -36,19 +36,25 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.image.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
-              path: /
-              port: http
+              path: /coupon/actuator/health
+              port: {{ .Values.image.port }}
+              scheme: HTTP
+            initialDelaySeconds: 200
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: serverPort
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -79,6 +85,16 @@ spec:
                 configMapKeyRef:
                   name: {{ $fullName }}
                   key: dbDdlauto
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: kafkaHost
+            - name: KAFKA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: kafkaPort
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

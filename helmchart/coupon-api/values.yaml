@@ -5,10 +5,10 @@
 replicaCount: 3
 
 image:
-  repository: ${IMAGE_REPOSITORY_URL}
+  repository: 320811633077.dkr.ecr.ap-northeast-2.amazonaws.com/sample-coupon-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ${TAG_NAME}
+  tag: 992bda6
   port: 8081
 
 imagePullSecrets: []

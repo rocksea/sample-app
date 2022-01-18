@@ -50,6 +50,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: serverPort
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -80,6 +85,16 @@ spec:
                 configMapKeyRef:
                   name: {{ $fullName }}
                   key: dbDdlauto
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: kafkaHost
+            - name: KAFKA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: kafkaPort
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

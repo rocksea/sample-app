@@ -3,10 +3,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "coupon-api.fullname" . }}
 data:
-  serverPort: '8080'
+  serverPort: '8081'
   dbHost: 'database-2.cluster.ap-northeast-2.rds.amazonaws.com'
   dbPort: '3306'
   dbName: 'sample'
   dbDdlauto: 'update'
-  kafkaHost: 'sample-kafka'
+  kafkaHost: 'sample-kafka-0.sample-kafka-headless.sample.svc.cluster.local'
   kafkaPort: '9092'

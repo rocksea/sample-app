@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
+import kr.co.sample.coupon.application.AddNewCouponHandler;
 import kr.co.sample.coupon.domain.aggregate.Coupon;
 import kr.co.sample.coupon.domain.repository.CouponRepository;
 import kr.co.sample.coupon.domain.vo.CouponType;

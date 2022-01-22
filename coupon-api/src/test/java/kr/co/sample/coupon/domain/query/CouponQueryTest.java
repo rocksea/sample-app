@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import kr.co.sample.coupon.application.CouponQueryService;
 import kr.co.sample.coupon.domain.aggregate.Coupon;
 import kr.co.sample.coupon.domain.entity.BasicCoupon;
 import kr.co.sample.coupon.domain.vo.CouponType;

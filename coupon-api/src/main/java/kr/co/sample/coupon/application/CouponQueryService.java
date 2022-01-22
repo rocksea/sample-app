@@ -2,11 +2,12 @@
  * Copyright 2021 ROCKSEA. All rights Reserved.
  * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package kr.co.sample.coupon.domain.query;
+package kr.co.sample.coupon.application;
 
 import org.springframework.stereotype.Service;
 
 import kr.co.sample.coupon.domain.aggregate.Coupon;
+import kr.co.sample.coupon.domain.query.CouponQueryResult;
 import kr.co.sample.coupon.domain.query.exception.CouponIsNotIssuableException;
 import kr.co.sample.coupon.domain.query.exception.CouponNotFoundException;
 import kr.co.sample.coupon.infrastructure.CouponQueryRepository;

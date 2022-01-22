@@ -22,8 +22,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import kr.co.sample.coupon.application.CouponQueryService;
 import kr.co.sample.coupon.domain.query.CouponQueryResult;
-import kr.co.sample.coupon.domain.query.CouponQueryService;
 import kr.co.sample.coupon.domain.query.exception.CouponNotFoundException;
 import kr.co.sample.coupon.presentation.http.GetCouponController;
 import kr.co.sample.coupon.presentation.http.exception.CouponNotFoundExceptionHandler;

@@ -2,13 +2,14 @@
  * Copyright 2021 ROCKSEA. All rights Reserved.
  * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package kr.co.sample.member.domain.command;
+package kr.co.sample.member.application;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
 import kr.co.sample.member.domain.Member;
+import kr.co.sample.member.domain.command.AddNewMember;
 import kr.co.sample.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 

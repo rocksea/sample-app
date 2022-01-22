@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import kr.co.sample.core.cqrs.command.CommandHandler;
+import kr.co.sample.member.application.AddNewMemberHandler;
 import kr.co.sample.member.domain.Member;
 import kr.co.sample.member.domain.repository.MemberRepository;
 

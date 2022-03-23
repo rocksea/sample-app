@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/member/v1/members/1"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"id\":1, \"name\":\"Steve\", \"age\":30}",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-WireMock-Who-Am-I": "API_V1"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/cors/duplicate"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"cors\": true}",
+    "headers": {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "http://undefined-cors.local",
+      "X-WireMock-Who-Am-I": "CORS"
+    }
+  }
+}

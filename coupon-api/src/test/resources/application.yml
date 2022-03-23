@@ -15,3 +15,22 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+        loggerLevel: HEADERS
+  httpclient:
+    enabled: true
+  compression:
+    request:
+      enabled: false
+    response:
+      enabled: false
+
+service:
+  member:
+    url: http://localhost:${wiremock.server.port}

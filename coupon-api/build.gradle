@@ -8,6 +8,10 @@ version '0.0.1-SNAPSHOT'
 
 repositories {
 	mavenCentral()
+	mavenLocal()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://repo.spring.io/release" }
 }
 
 apply from: './querydsl.gradle'
@@ -17,6 +21,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation('org.springframework.boot:spring-boot-starter-validation')
+	implementation('org.springframework.cloud:spring-cloud-starter-openfeign')
+
 	implementation(project(':core'))
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	runtimeOnly('mysql:mysql-connector-java')
@@ -24,8 +30,18 @@ dependencies {
 	implementation('org.springframework.kafka:spring-kafka')
 	testImplementation('org.springframework.kafka:spring-kafka-test')
 	testImplementation('org.springframework.security:spring-security-test')
+	testImplementation('org.springframework.cloud:spring-cloud-starter-contract-stub-runner')
 	testImplementation('com.h2database:h2')
+}
 
+ext {
+	set('springCloudVersion', "2021.0.1")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 test {

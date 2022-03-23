@@ -1,0 +1,11 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/timeout"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"timeout\": true}",
+    "fixedDelayMilliseconds": 100
+  }
+}

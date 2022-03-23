@@ -4,7 +4,7 @@ metadata:
   name: {{ include "member-api.fullname" . }}
 data:
   serverPort: '8080'
-  dbHost: 'database-2.cluster.ap-northeast-2.rds.amazonaws.com'
+  dbHost: 'database-2.cluster-cvinkzp4mhyj.ap-northeast-2.rds.amazonaws.com'
   dbPort: '3306'
   dbName: 'sample'
   dbDdlauto: 'update'

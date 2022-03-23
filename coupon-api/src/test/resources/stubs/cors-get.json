@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/cors"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"cors\": true}",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-WireMock-Who-Am-I": "CORS"
+    }
+  }
+}

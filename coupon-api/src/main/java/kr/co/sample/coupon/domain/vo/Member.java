@@ -10,5 +10,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class Member {
-    private Integer memberId;
+    private Integer id;
+    private String name;
+    private Integer age;
 }

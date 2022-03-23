@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/member/v1/healths"
+  },
+  "response": {
+    "status": 200,
+    "body": "{}",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-WireMock-Who-Am-I": "API_V1"
+    }
+  }
+}

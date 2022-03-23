@@ -4,7 +4,7 @@ server:
   error:
     whitelabel:
       enabled: false
-  port: ${SERVER_PORT:8081}
+  port: ${SERVER_PORT:8080}
 
 spring:
   profiles:
@@ -33,9 +33,28 @@ spring:
       # key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+        loggerLevel: HEADERS
+  httpclient:
+    enabled: true
+  compression:
+    request:
+      enabled: false
+    response:
+      enabled: false
+
 management:
   endpoints:
     web:
       base-path: /coupon/actuator
       exposure:
         include: health, info, metrics, prometheus
+
+service:
+  member:
+    url: http://localhost:${SERVER_PORT:8080}

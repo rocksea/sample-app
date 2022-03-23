@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/member/v1/members/2"
+  },
+  "response": {
+    "status": 404,
+    "body": "",
+    "headers": {
+      "Content-Type": "application/json",
+      "X-WireMock-Who-Am-I": "API_V1"
+    }
+  }
+}

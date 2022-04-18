@@ -1,0 +1,100 @@
+{{- $fullName := include "coupon-api.fullname" . -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ $fullName }}
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {}
+      - setWeight: 40
+      - pause: {duration: 10}
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      {{- include "coupon-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "coupon-api.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        ports:
+        - name: http
+          containerPort: {{ .Values.image.port }}
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        env:
+          - name: SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: serverPort
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: dbHost
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: dbPort
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: dbName
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullName }}
+                key: dbUsername
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullName }}
+                key: dbPassword
+          - name: DB_DDL_AUTO
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: dbDdlauto
+          - name: KAFKA_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: kafkaHost
+          - name: KAFKA_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $fullName }}
+                key: kafkaPort
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

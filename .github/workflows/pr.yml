@@ -1,0 +1,60 @@
+name: PR workflow
+
+on:
+  pull_request:
+    branches: [ main ]
+
+env:
+  BUCKET_NAME : "rocksea-apps"
+  AWS_REGION : "ap-northeast-2"
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  COMMIT_ID: $${{ github.sha }}
+  PR_NUMBER: ${{ github.event.number}}
+
+permissions:
+      id-token: write
+      contents: read
+jobs:
+  S3PackageUpload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::320811633077:role/github-action
+          role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Check envs
+        run: |
+          echo REPOSITORY_NAME: ${REPOSITORY_NAME}
+          echo BRANCH_NAME: ${BRANCH_NAME}
+          echo COMMIT_ID: ${COMMIT_ID}
+          echo PR_NUMBER: ${PR_NUMBER}
+      - name: create data.json for meta
+        run: |
+          echo '{' > data.json
+          echo '  "repository": "'$REPOSITORY_NAME$'",' >> data.json
+          echo '  "branch": "'$BRANCH_NAME'",' >> data.json
+          echo '  "commitId": "'$COMMIT_ID'",' >> data.json
+          echo '  "prId": "'$PR_NUMBER'"' >> data.json
+          echo '}' >> data.json
+      - name: check meta from data.json
+        run: |
+          cat data.json
+      - name: check meta from data.json
+        run: |
+          REPOSITORY_FROM_JSON=$(jq .repository ./data.json)
+          BRANCH_FROM_JSON=$(jq .branch ./data.json)
+          COMMIT_ID_FROM_JSON=$(jq .commitId ./data.json)
+          PR_ID_FROM_JSON=$(jq .prId ./data.json)
+          echo ${REPOSITORY_FROM_JSON}
+          echo ${BRANCH_FROM_JSON}
+      - name: Make zip file
+        run: |
+          zip -r ./pr.zip ./
+      - name:  Copy *.zip to s3
+        run: |
+          aws s3 cp ./pr.zip s3://${{ env.BUCKET_NAME }}/

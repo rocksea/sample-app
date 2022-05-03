@@ -1,0 +1,75 @@
+server:
+  port: ${SERVER_PORT:5000}
+  error:
+    include-stacktrace: always
+
+spring:
+  application:
+    name: gateway-api
+  redis:
+    host: localhost
+    port: 6379
+  output:
+    ansi:
+      enabled: always
+  main:
+    web-application-type: reactive
+  mvc:
+    log-request-details: true
+    format:
+      date-time: iso
+      date: iso
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    time-zone: ${TZ:UTC}
+  webflux:
+    format:
+      date-time: iso
+      date: iso
+  gson:
+    date-format: yyyy
+  cloud:
+    gateway:
+      httpclient:
+        wiretap: true
+        response-timeout: 180000
+        connect-timeout: 10000
+      httpserver:
+        wiretap: true
+      default-filters:
+        - PreserveHostHeader
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-methods:
+              - "GET"
+              - "POST"
+              - "PUT"
+              - "PATCH"
+              - "DELETE"
+              - "OPTIONS"
+              - "HEAD"
+            allowed-headers:
+              - "*"
+            allow-credentials: true
+
+management:
+  endpoint:
+    health:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
+
+jwt:
+  secret: ${JWT_SECRET:blabla}
+  expiration: 1800

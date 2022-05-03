@@ -9,4 +9,5 @@ rootProject.name = 'sample_app'
 include 'member-api'
 include 'core'
 include 'coupon-api'
+include 'gateway-api'
 

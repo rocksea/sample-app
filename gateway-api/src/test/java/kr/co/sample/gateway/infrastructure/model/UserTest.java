@@ -13,6 +13,8 @@ public class UserTest {
     public void createUserTest() {
         User user = User.builder().id("1").name("rocksea").age(10).build();
         assertThat(user).isNotNull();
-        assertThat(user.getName()).isNull();
+        assertThat(user.getId()).isNotNull();
+        assertThat(user.getName()).isNotNull();
+        assertThat(user.getAge()).isNotNull();
     }
 }

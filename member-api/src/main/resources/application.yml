@@ -39,3 +39,6 @@ management:
       base-path: /member/actuator
       exposure:
         include: health, info, metrics, prometheus
+
+logging:
+  config: classpath:log4j/log4j2.yml

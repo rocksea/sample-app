@@ -58,3 +58,6 @@ management:
 service:
   member:
     url: http://localhost:${SERVER_PORT:8080}
+
+logging:
+  config: classpath:log4j/log4j2.yml

@@ -1,15 +1,15 @@
-# Default values for sample-app-chart.
+# Default values for member-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 3
+replicaCount: 1
 
 image:
-  repository: 320811633077.dkr.ecr.ap-northeast-2.amazonaws.com/sample-coupon-api
+  repository: ${IMAGE_REPO_URL}/${IMAGE_REPO_NAME}
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: 992bda6
   port: 8080
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ${IMAGE_TAG} 
 
 imagePullSecrets: []
 nameOverride: ""
@@ -17,7 +17,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -43,17 +43,32 @@ service:
   targetPort: 8080
 
 ingress:
-  enabled: false
-  className: ""
-  annotations: {}
+  enabled: true
+  className: alb
+  annotations: 
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/load-balancer-name: alb-${ENV}
+    alb.ingress.kubernetes.io/group.name: alb-${ENV}
+    #alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/tags: environment=${ENV},owner=platform
+    #alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/actions.forward-member-api-tg: >
+      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"member-api-blue", "servicePort":"80","weight": 90},{"serviceName":"member-api-green", "servicePort":"80","weight": 10}]}}
+
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: sample.co.kr
+    - host: ${HOST_NAME}
       paths:
-        - path: /coupon
+        - path: /member
           pathType: Prefix
-          # pathType: ImplementationSpecific
+          backend:
+            service:
+              name: member-api
+              port:
+                number: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -74,8 +89,8 @@ resources: {}
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}

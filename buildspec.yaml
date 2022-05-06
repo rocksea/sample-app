@@ -9,7 +9,15 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - export IMAGE_TAG=${COMMIT_HASH:=latest}
+      - export IMAGE_REPO_URL="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+      - export BRANCH_NAME='main'
+      - export DOMAIN_NAME='rocksea.achromaticscenery.com'
+      - export HOST_NAME="${BRANCH_NAME}.${DOMAIN_NAME}"
+      - export SERVICE_NAME="${APP_NAME}"
+      - export ENV='dev'
+      - export HELM_EXPERIMENTAL_OCI=1
+
   build:
     commands:
       - echo Build started on `date`
@@ -23,7 +31,15 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}
+      - docker push ${IMAGE_REPO_URL}/${IMAGE_REPO_NAME}:${IMAGE_TAG}
+      # Packaging Chart
+      - cd ../helmchart/${APP_NAME}
+      - cat ${APP_NAME}/values.template.yaml | envsubst > ${APP_NAME}/values.yaml
+      - helm package ${APP_NAME} --version 0.0.1-${BRANCH_NAME}
+      # Login to ECR
+      - aws ecr get-login-password --region ap-northeast-2 | helm registry login --username AWS --password-stdin ${IMAGE_REPO_URL}
+      # Push to ECR
+      - helm push ${APP_NAME}-0.0.1-${BRANCH_NAME}.tgz oci://${IMAGE_REPO_URL}
 cache:
   paths:
     - '/root/.m2/**/*'

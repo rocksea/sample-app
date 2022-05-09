@@ -33,7 +33,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push ${IMAGE_REPO_URL}/${IMAGE_REPO_NAME}:${IMAGE_TAG}
       # Packaging Chart
-      - cd ../helmchart/${APP_NAME}
+      - cd ../helmchart
       - pwd
       - cat ${APP_NAME}/values.template.yaml | envsubst > ${APP_NAME}/values.yaml
       - helm package ${APP_NAME} --version 0.0.1-${BRANCH_NAME}

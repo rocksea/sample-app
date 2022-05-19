@@ -1,11 +1,11 @@
-# Default values for member-api.
+# Default values for coupon-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: 320811633077.dkr.ecr.ap-northeast-2.amazonaws.com/sample-member-api
+  repository: 320811633077.dkr.ecr.ap-northeast-2.amazonaws.com/sample-coupon-api
   pullPolicy: IfNotPresent
   port: 8080
   # Overrides the image tag whose default is the chart appVersion.
@@ -54,19 +54,19 @@ ingress:
     alb.ingress.kubernetes.io/tags: environment=dev,owner=platform
     #alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /
-    alb.ingress.kubernetes.io/actions.forward-member-api-tg: >
-      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"member-api-blue", "servicePort":"80","weight": 90},{"serviceName":"member-api-green", "servicePort":"80","weight": 10}]}}
+    alb.ingress.kubernetes.io/actions.forward-coupon-api-tg: >
+      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api-blue", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-green", "servicePort":"80","weight": 10}]}}
 
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: member.dev.rocksea.achromaticscenery.com
+    - host: coupon.dev.rocksea.achromaticscenery.com
       paths:
-        - path: /member
+        - path: /coupon
           pathType: Prefix
           backend:
             service:
-              name: member-api
+              name: coupon-api
               port:
                 number: 80
   tls: []

@@ -1,40 +1,19 @@
-{{- $fullName := include "coupon-api.fullname" . -}}
+{{- $fullName := include "member-api.fullname" . -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: {{ $fullName }}
 spec:
-  replicas: 5
-  revisionHistoryLimit: 5
+  replicas: 2
+  revisionHistoryLimit: 2
   strategy:
-    canary:
-      canaryService: coupon-api-canary
-      stableService: coupon-api-stable
-      trafficRouting:
-        alb:
-          ingress: coupon-api
-          rootService: coupon-api
-          servicePort: 80
-
-      analysis:
-        templates:
-        - templateName: success-rate
-        startingStep: 2 # delay starting analysis run until setWeight: 40%
-        args:
-        - name: service-name
-          value: coupon-api.dev.svc.cluster.local
-      steps:
-      - setWeight: 5
-      - pause: {}
-      - setWeight: 40
-      - pause: {duration: 10}
-      - setWeight: 60
-      - pause: {duration: 10}
-      - setWeight: 80
-      - pause: {duration: 10}
+    blueGreen: 
+      activeService:  {{ $fullName }}-blue
+      previewService: {{ $fullName }}-green
+      autoPromotionEnabled: false
   selector:
     matchLabels:
-      {{- include "coupon-api.selectorLabels" . | nindent 6 }}
+      {{- include "member-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -42,7 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "coupon-api.selectorLabels" . | nindent 8 }}
+        {{- include "member-api.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: {{ .Chart.Name }}

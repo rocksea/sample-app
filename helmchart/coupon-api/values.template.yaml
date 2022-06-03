@@ -53,12 +53,9 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/tags: environment=${ENV},owner=platform
     #alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/healthcheck-path: /
-    alb.ingress.kubernetes.io/actions.forward-coupon-api-tg: >
-      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api-blue", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-green", "servicePort":"80","weight": 10}]}}
-
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+    alb.ingress.kubernetes.io/healthcheck-path: /coupon/actuator/health
+    alb.ingress.kubernetes.io/actions.coupon-api: >
+      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api-stable", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-canary", "servicePort":"80","weight": 10}]}}
   hosts:
     - host: ${HOST_NAME}
       paths:
@@ -68,7 +65,7 @@ ingress:
             service:
               name: coupon-api
               port:
-                number: 80
+                name: use-annotation
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

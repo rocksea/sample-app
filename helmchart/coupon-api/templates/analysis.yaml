@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: success-rate
+spec:
+  args:
+  - name: service-name
+  metrics:
+  - name: success-rate
+    successCondition: "result == 'UP'"
+    provider:
+      web:
+        url: "http://coupon-api.dev.svc.cluster.local/coupon/actuator/health"
+        jsonPath: "{$.status}" 
+

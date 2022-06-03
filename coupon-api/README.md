@@ -63,3 +63,8 @@ helm push coupon-api-0.0.1.tgz oci://$IMAGE_REPO_URL
 helm pull oci://xxxxxxxxx.dkr.ecr.ap-northeast-2.amazonaws.com/coupon-api --version 0.0.1
 helm install coupon-api ./coupon-api-0.0.1.tgz -ndev
 ```
+
+### Create an app on ArgoCd
+```
+argocd app create coupon-api --repo https://github.com/rocksea/sample-app.git --path helmchart/coupon-api --dest-namespace dev --dest-server https://kubernetes.default.svc --sync-policy auto
+```

@@ -25,7 +25,7 @@ public class GetMemberController {
 
     @GetMapping
     public String getHello() {
-        return "Hello world. I'm BLUE!!";
+        return "Hello world. I'm GREEN!!";
     }
 
     @GetMapping("/{id}")

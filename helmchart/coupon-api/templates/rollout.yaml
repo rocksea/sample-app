@@ -9,13 +9,12 @@ spec:
   strategy:
     canary:
       canaryService: coupon-api-canary
-      stableService: coupon-api-stable
+      stableService: coupon-api
       trafficRouting:
         alb:
           ingress: coupon-api
-          rootService: coupon-api
+          #rootService: coupon-api
           servicePort: 80
-
       analysis:
         templates:
         - templateName: success-rate

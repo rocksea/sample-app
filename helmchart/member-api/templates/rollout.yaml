@@ -8,7 +8,7 @@ spec:
   revisionHistoryLimit: 2
   strategy:
     blueGreen: 
-      activeService:  {{ $fullName }}-blue
+      activeService:  {{ $fullName }}
       previewService: {{ $fullName }}-green
       autoPromotionEnabled: false
   selector:

@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
   port: 8080
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 8dca5da 
+  tag: blue 
 
 imagePullSecrets: []
 nameOverride: ""
@@ -55,7 +55,7 @@ ingress:
     #alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /coupon/actuator/health
     alb.ingress.kubernetes.io/actions.coupon-api: >
-      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api-stable", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-canary", "servicePort":"80","weight": 10}]}}
+      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-canary", "servicePort":"80","weight": 10}]}}
   hosts:
     - host: coupon.dev.rocksea.achromaticscenery.com
       paths:

@@ -55,7 +55,7 @@ ingress:
     #alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /coupon/actuator/health
     alb.ingress.kubernetes.io/actions.coupon-api: >
-      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api-stable", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-canary", "servicePort":"80","weight": 10}]}}
+      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-canary", "servicePort":"80","weight": 10}]}}
   hosts:
     - host: ${HOST_NAME}
       paths:

@@ -54,11 +54,6 @@ ingress:
     alb.ingress.kubernetes.io/tags: environment=${ENV},owner=platform
     #alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /member/actuator/health
-    alb.ingress.kubernetes.io/actions.forward-member-api-tg: >
-      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"member-api-blue", "servicePort":"80","weight": 90},{"serviceName":"member-api-green", "servicePort":"80","weight": 10}]}}
-
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   hosts:
     - host: ${HOST_NAME}
       paths:

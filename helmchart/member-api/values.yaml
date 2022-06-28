@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
   port: 8080
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 8dca5da 
+  tag: blue 
 
 imagePullSecrets: []
 nameOverride: ""
@@ -54,11 +54,6 @@ ingress:
     alb.ingress.kubernetes.io/tags: environment=dev,owner=platform
     #alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /member/actuator/health
-    alb.ingress.kubernetes.io/actions.forward-member-api-tg: >
-      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"member-api-blue", "servicePort":"80","weight": 90},{"serviceName":"member-api-green", "servicePort":"80","weight": 10}]}}
-
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   hosts:
     - host: member.dev.rocksea.achromaticscenery.com
       paths:

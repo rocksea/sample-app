@@ -47,8 +47,8 @@ ingress:
   className: alb
   annotations: 
     kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/load-balancer-name: alb-dev
-    alb.ingress.kubernetes.io/group.name: alb-dev
+    alb.ingress.kubernetes.io/load-balancer-name: newalb-dev
+    alb.ingress.kubernetes.io/group.name: newalb-dev
     #alb.ingress.kubernetes.io/scheme: internal
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/tags: environment=dev,owner=platform

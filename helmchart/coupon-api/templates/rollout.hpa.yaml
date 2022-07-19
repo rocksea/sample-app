@@ -1,0 +1,28 @@
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "coupon-api.fullname" . }}
+  labels:
+    {{- include "coupon-api.labels" . | nindent 4 }}
+spec:
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: {{ include "coupon-api.fullname" . }}
+  metrics:
+    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- end }}

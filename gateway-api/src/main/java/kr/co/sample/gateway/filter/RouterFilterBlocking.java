@@ -4,6 +4,8 @@
  */
 package kr.co.sample.gateway.filter;
 
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -31,9 +33,15 @@ public class RouterFilterBlocking implements GatewayFilter {
         log.info("request.getHeaders() : {}", request.getHeaders());
         log.info("##라우팅 response cookies: {}", exchange.getResponse().getCookies());
         Mono<Long> result = userRepository.save(User.builder().id("1").age(10).name("rocksea").build());
-        result.block();
-        Mono<User> user = userRepository.findById("1");
-        user.block();
+        try {
+            result.toFuture().get();
+            Mono<User> user = userRepository.findById("1");
+            user.toFuture().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         return chain.filter(exchange);
     }
 }

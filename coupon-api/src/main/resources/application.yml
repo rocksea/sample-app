@@ -32,6 +32,11 @@ spring:
       bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
       # key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: false
 
 feign:
   client:
@@ -65,13 +70,7 @@ management:
           OUT_OF_SERVICE: 503
           UNKNOWN: 200
           UP: 200
-  health:
-    status:
-      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
-    livenessstate:
-      enabled: true
-    readinessstate:
-      enabled: true
+        order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
 
 service:
   member:

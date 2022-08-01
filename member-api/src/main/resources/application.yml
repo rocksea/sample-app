@@ -50,13 +50,7 @@ management:
           OUT_OF_SERVICE: 503
           UNKNOWN: 200
           UP: 200
-  health:
-    status:
-      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
-    livenessstate:
-      enabled: true
-    readinessstate:
-      enabled: true
+        order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
 
 logging:
   config: classpath:log4j/log4j2.yml

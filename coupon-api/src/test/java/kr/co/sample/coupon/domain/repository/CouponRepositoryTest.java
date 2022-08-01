@@ -7,6 +7,8 @@ package kr.co.sample.coupon.domain.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Optional;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.*;
@@ -20,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import kr.co.sample.coupon.domain.aggregate.Coupon;
 import kr.co.sample.coupon.domain.entity.BasicCoupon;
+import kr.co.sample.coupon.domain.query.exception.CouponNotFoundException;
 import kr.co.sample.coupon.domain.vo.CouponType;
 import kr.co.sample.coupon.domain.vo.DiscountType;
 
@@ -39,6 +42,7 @@ public class CouponRepositoryTest {
     void setup() {
         basicCoupon =
                 BasicCoupon.builder()
+                        .id(1)
                         .name("BasicCoupon")
                         .couponType(CouponType.BASIC)
                         .discountType(DiscountType.AMOUNT)
@@ -57,14 +61,27 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(2)
-    @Rollback(false)
-    @DisplayName("베이직쿠폰이 삭제되어야한다")
-    public void basicCoupon_should_be_deleted() {
-        couponRepository.delete(basicCoupon);
+    @DisplayName("베이직쿠폰이 조회가 성공해야한다")
+    public void basicCoupon_should_be_found() {
+        Coupon coupon =
+                couponRepository
+                        .findById(1)
+                        .orElseThrow(() -> new CouponNotFoundException("쿠폰이 존재하지 않습니다."));
+        assertThat(coupon).isEqualTo(basicCoupon);
     }
 
     @Test
     @Order(3)
+    @Rollback(false)
+    @DisplayName("베이직쿠폰이 삭제되어야한다")
+    public void basicCoupon_should_be_deleted() {
+        couponRepository.delete(basicCoupon);
+        Optional<Coupon> coupon = couponRepository.findById(1);
+        assertThat(coupon.isEmpty()).isTrue();
+    }
+
+    @Test
+    @Order(4)
     @DisplayName("베이직쿠폰이 조회 시 예외가 발생해야한다")
     public void basicCoupon_should_not_be_found() {
         assertThrows(

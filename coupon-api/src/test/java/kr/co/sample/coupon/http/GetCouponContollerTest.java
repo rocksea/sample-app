@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
 
 import kr.co.sample.coupon.application.CouponQueryService;
 import kr.co.sample.coupon.domain.query.CouponQueryResult;
@@ -35,7 +34,7 @@ import kr.co.sample.coupon.presentation.http.exception.CouponNotFoundExceptionHa
 class GetCouponContollerTest {
     @Autowired private MockMvc mockMvc;
 
-    @Autowired private WebApplicationContext context;
+    // @Autowired private WebApplicationContext context;
 
     @MockBean private CouponQueryService couponQuery;
 

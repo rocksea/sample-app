@@ -34,7 +34,7 @@ class AddCouponContollerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("Coupon should be created.")
+    @DisplayName("베이직쿠폰생성 API 호출이 성공해야 한다.")
     void coupon_should_be_created() throws Exception {
         this.mockMvc
                 .perform(
@@ -53,7 +53,7 @@ class AddCouponContollerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("AddCoupon should be failed.")
+    @DisplayName("베이직쿠폰생성이 실패해야 한다.")
     void addCoupon_should_be_failed() throws Exception {
         this.mockMvc
                 .perform(post("/coupon").contentType(MediaType.APPLICATION_JSON).with(csrf()).content(""))

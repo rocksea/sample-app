@@ -7,9 +7,9 @@ package kr.co.sample.coupon.infrastructure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -23,14 +23,15 @@ import kr.co.sample.coupon.domain.vo.Member;
 @WebMvcTest
 @Import({FeignAutoConfiguration.class})
 @EnableFeignClients(basePackages = "kr.co.sample.coupon.infrastructure")
-@AutoConfigureMockMvc
 @AutoConfigureWireMock(port = 0, stubs = "classpath:/stubs")
 @ActiveProfiles("test")
-public class MemberApiTest {
+@DisplayName("MemberRepository Tests")
+public class MemberRepositoryTest {
     @Autowired MemberRepository memberRepository;
 
     @Test
-    public void should_get_member() throws Exception {
+    @DisplayName("회원 조회에 성공해야한다")
+    public void member_should_be_found() throws Exception {
         Member member = memberRepository.getMember(1);
         assertThat(member.getName()).isEqualTo("Steve");
         assertThat(member.getAge()).isEqualTo(30);
@@ -38,7 +39,8 @@ public class MemberApiTest {
     }
 
     @Test
-    public void should_get_member_notfound_exception() throws Exception {
+    @DisplayName("회원 조회 시 NotFound 예외가 발생해야 한다")
+    public void member_should_not_be_found() throws Exception {
         assertThrows(
                 FeignException.NotFound.class,
                 () -> {

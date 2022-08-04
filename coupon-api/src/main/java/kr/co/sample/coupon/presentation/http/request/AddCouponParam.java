@@ -11,12 +11,14 @@ import javax.validation.constraints.NotNull;
 import kr.co.sample.coupon.domain.vo.CouponType;
 import kr.co.sample.coupon.domain.vo.DiscountType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AddCouponParam {
     @NotNull private CouponType couponType;
     @NotNull private String name;

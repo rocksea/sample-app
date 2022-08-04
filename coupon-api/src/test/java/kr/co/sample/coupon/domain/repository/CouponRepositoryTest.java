@@ -61,6 +61,7 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(2)
+    @Rollback(false)
     @DisplayName("베이직쿠폰이 조회가 성공해야한다")
     public void basicCoupon_should_be_found() {
         Coupon coupon =
@@ -82,6 +83,7 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(4)
+    @Rollback(false)
     @DisplayName("베이직쿠폰이 조회 시 예외가 발생해야한다")
     public void basicCoupon_should_not_be_found() {
         assertThrows(

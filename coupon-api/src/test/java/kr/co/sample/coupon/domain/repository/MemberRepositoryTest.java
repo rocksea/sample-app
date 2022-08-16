@@ -2,7 +2,7 @@
  * Copyright 2021 ROCKSEA. All rights Reserved.
  * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package kr.co.sample.coupon.infrastructure;
+package kr.co.sample.coupon.domain.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,7 +22,7 @@ import kr.co.sample.coupon.domain.vo.Member;
 
 @WebMvcTest
 @Import({FeignAutoConfiguration.class})
-@EnableFeignClients(basePackages = "kr.co.sample.coupon.infrastructure")
+@EnableFeignClients(basePackages = "kr.co.sample.coupon.domain.repository")
 @AutoConfigureWireMock(port = 0, stubs = "classpath:/stubs")
 @ActiveProfiles("test")
 @DisplayName("MemberRepository Tests")

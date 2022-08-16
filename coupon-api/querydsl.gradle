@@ -27,15 +27,15 @@ dependencies {
 	implementation group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion
 }
 
-build.doFirst {
-	if ( file(queryDslGenerated).exists() )
-		delete(file(queryDslGenerated))
-}
-
-compileQuerydsl.doFirst {
-	if ( file(queryDslGenerated).exists() )
-		delete(file(queryDslGenerated))
-}
+//build.doFirst {
+//	if ( file(queryDslGenerated).exists() )
+//		delete(file(queryDslGenerated))
+//}
+//
+//compileQuerydsl.doFirst {
+//	if ( file(queryDslGenerated).exists() )
+//		delete(file(queryDslGenerated))
+//}
 
 tasks.withType(JavaCompile) {
 	options.generatedSourceOutputDirectory = file(queryDslGenerated)

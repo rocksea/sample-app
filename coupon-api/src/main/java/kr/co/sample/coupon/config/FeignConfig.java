@@ -7,6 +7,6 @@ package kr.co.sample.coupon.config;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 
-@EnableFeignClients(basePackages = "kr.co.sample.coupon.infrastructure")
+@EnableFeignClients(basePackages = "kr.co.sample.coupon.domain.repository")
 @Configuration
 public class FeignConfig {}

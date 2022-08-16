@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import kr.co.sample.coupon.domain.repository.MemberRepository;
 import kr.co.sample.coupon.domain.vo.Member;
-import kr.co.sample.coupon.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 @RestController

@@ -2,7 +2,7 @@
  * Copyright 2021 ROCKSEA. All rights Reserved.
  * ROCKSEA PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package kr.co.sample.coupon.infrastructure;
+package kr.co.sample.coupon.domain.repository;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

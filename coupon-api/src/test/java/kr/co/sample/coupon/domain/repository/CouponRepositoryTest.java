@@ -32,6 +32,7 @@ import kr.co.sample.coupon.domain.vo.DiscountType;
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
+@Rollback(false)
 @DisplayName("CouponRepository Tests")
 public class CouponRepositoryTest {
     @Autowired private CouponRepository couponRepository;
@@ -52,7 +53,6 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(1)
-    @Rollback(false)
     @DisplayName("베이직쿠폰이 입력되어야한다")
     public void basicCoupon_should_be_inserted() {
         Coupon savedCoupon = couponRepository.save(basicCoupon);
@@ -61,7 +61,6 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(2)
-    @Rollback(false)
     @DisplayName("베이직쿠폰이 조회가 성공해야한다")
     public void basicCoupon_should_be_found() {
         Coupon coupon =
@@ -73,7 +72,6 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(3)
-    @Rollback(false)
     @DisplayName("베이직쿠폰이 삭제되어야한다")
     public void basicCoupon_should_be_deleted() {
         couponRepository.delete(basicCoupon);
@@ -83,7 +81,6 @@ public class CouponRepositoryTest {
 
     @Test
     @Order(4)
-    @Rollback(false)
     @DisplayName("베이직쿠폰이 조회 시 예외가 발생해야한다")
     public void basicCoupon_should_not_be_found() {
         assertThrows(

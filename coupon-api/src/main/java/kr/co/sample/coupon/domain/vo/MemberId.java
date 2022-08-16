@@ -10,10 +10,10 @@ import lombok.AllArgsConstructor;
 
 @Embeddable
 @AllArgsConstructor
-public class CouponId {
+public class MemberId {
     private Integer id;
 
-    public static CouponId of(Integer id) {
-        return new CouponId(id);
+    public static MemberId of(Integer id) {
+        return new MemberId(id);
     }
 }

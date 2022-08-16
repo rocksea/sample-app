@@ -18,9 +18,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @EqualsAndHashCode(of = "id", callSuper = false)
 public abstract class IssuedCoupon extends BaseEntity {
-    // @EmbeddedId
-    // private CouponId id;
-
     @Id @GeneratedValue private Integer id;
 
     private CouponType couponType;

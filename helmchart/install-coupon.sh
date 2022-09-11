@@ -32,7 +32,7 @@ argocd login --insecure ${ARGOCD_URL} --username 'admin' --password ${ARGOCD_PAS
 argocd repo add ${IMAGE_REPO_URL} --enable-oci --username AWS --type helm --password ${ECR_PASS} --name eks --upsert
 
 # create an application
-argocd app create ${SERVICE_NAME} --repo ${IMAGE_REPO_URL} --helm-chart ${SERVICE_NAME} --revision ${VERSION} --dest-namespace dev --dest-server https://kubernetes.default.svc --sync-policy auto --upsert
+argocd app create ${SERVICE_NAME} --repo ${IMAGE_REPO_URL} --helm-chart ${SERVICE_NAME} --revision ${VERSION} --dest-namespace dev --dest-server https://kubernetes.default.svc --sync-policy auto --auto-prune --upsert
 
 # remove manifest cache
 argocd app get ${SERVICE_NAME} --hard-refresh

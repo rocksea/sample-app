@@ -2,6 +2,9 @@ server:
   port: ${SERVER_PORT:5000}
   error:
     include-stacktrace: always
+  netty:
+    idle-timeout: 3s
+    connection-timeout: 3s
 
 spring:
   application:
@@ -32,8 +35,10 @@ spring:
     gateway:
       httpclient:
         wiretap: true
-        response-timeout: 180000
+        response-timeout: 3s
         connect-timeout: 10000
+        pool:
+          max-idle-time: 3s
       httpserver:
         wiretap: true
       default-filters:
@@ -53,6 +58,7 @@ spring:
             allowed-headers:
               - "*"
             allow-credentials: true
+
 
 management:
   endpoint:

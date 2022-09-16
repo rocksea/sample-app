@@ -14,13 +14,20 @@ spec:
           ingress: coupon-api
           #rootService: coupon-api
           servicePort: 80
+        istio:
+          virtualService:
+            name: {{ $fullName }}     # required
+          destinationRule:
+            name: {{ $fullName }}    # required
+            canarySubsetName: canary  # required
+            stableSubsetName: stable  # required
       analysis:
         templates:
         - templateName: success-rate
         startingStep: 2 # delay starting analysis run until setWeight: 40%
         args:
         - name: service-name
-          value: coupon-api.dev.svc.cluster.local
+          value: {{ $fullName }}.{{ .Release.Namespace }}.svc.cluster.local
       steps:
       - setWeight: 20
       - pause: {}

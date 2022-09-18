@@ -14,7 +14,7 @@ import kr.co.sample.coupon.domain.command.AddNewCoupon;
 import kr.co.sample.coupon.presentation.http.request.AddCouponParam;
 
 @RestController
-@RequestMapping(value = "/coupon")
+@RequestMapping(value = "/coupon/v1/coupons")
 public class AddCouponController {
     private final CommandHandler<AddNewCoupon> addNewCouponCommandHandler;
 

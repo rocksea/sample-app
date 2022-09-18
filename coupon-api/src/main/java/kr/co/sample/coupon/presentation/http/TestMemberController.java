@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/member/v1/members", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/coupon/v1/members", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TestMemberController {
     private final MemberRepository memberRepository;
 

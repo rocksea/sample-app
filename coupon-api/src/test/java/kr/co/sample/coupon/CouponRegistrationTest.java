@@ -48,19 +48,22 @@ public class CouponRegistrationTest {
         // Add a Basic Coupon to H2
         ResponseEntity<Void> postResult =
                 this.restTemplate.postForEntity(
-                        String.format("http://localhost:%d/coupon", port), addCouponParam, Void.class);
+                        String.format("http://localhost:%d/coupon/v1/coupons", port),
+                        addCouponParam,
+                        Void.class);
         assertThat(postResult.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         // Get a Added Coupon from H2
         ResponseEntity<CouponQueryResult> getResult =
                 this.restTemplate.getForEntity(
-                        String.format("http://localhost:%d/coupon/1", port), CouponQueryResult.class);
+                        String.format("http://localhost:%d/coupon/v1/coupons/1", port),
+                        CouponQueryResult.class);
         assertThat(getResult.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         // Get a member from WireMock
         ResponseEntity<Member> getMemberResult =
                 this.restTemplate.getForEntity(
-                        String.format("http://localhost:%d/member/v1/members/1", port), Member.class);
+                        String.format("http://localhost:%d/coupon/v1/members/1", port), Member.class);
         assertThat(getMemberResult.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

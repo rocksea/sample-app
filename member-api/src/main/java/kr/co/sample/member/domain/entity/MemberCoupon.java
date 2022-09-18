@@ -15,7 +15,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id")
-@Entity
 @RedisHash("member_coupon")
 public class MemberCoupon {
     @Id private Integer id;

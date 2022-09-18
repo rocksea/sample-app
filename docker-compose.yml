@@ -16,17 +16,23 @@ services:
       - "3306:3306"
 
   zookeeper:
-    image: wurstmeister/zookeeper
     container_name: sample-zookeeper
+    image: wurstmeister/zookeeper
     ports:
       - '2181:2181'
 
   kafka:
-    image: wurstmeister/kafka
     container_name: sample-kafka
+    image: wurstmeister/kafka
     ports:
       - '9092:9092'
     environment:
       KAFKA_CREATE_TOPICS: 'sample:1:1'
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+  redis:
+    container_name: sample-redis
+    image: redis:7.0.4
+    ports:
+      - 6379:6379

@@ -47,7 +47,10 @@ class GetMemberContollerTest {
                 MemberQueryResult.builder().id(memberId).name("rocksea").age(99).build();
         when(memberQuery.getMemberById(memberId)).thenReturn(memberQueryResult);
         this.mockMvc
-                .perform(get("/member/" + memberId).contentType(MediaType.APPLICATION_JSON).with(csrf()))
+                .perform(
+                        get("/member/v1/members/" + memberId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(csrf()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -60,7 +63,7 @@ class GetMemberContollerTest {
         when(memberQuery.getMemberById(memberId)).thenThrow(MemberNotFoundException.class);
         this.mockMvc
                 .perform(
-                        get("/member/" + memberId)
+                        get("/member/v1/members/" + memberId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .with(csrf())
                                 .content(""))

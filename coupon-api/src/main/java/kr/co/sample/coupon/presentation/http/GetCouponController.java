@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/coupon", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/coupon/v1/coupons", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GetCouponController {
     private final CouponQueryService couponQuery;
 

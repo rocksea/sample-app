@@ -1,0 +1,42 @@
+def queryDslVersion = '5.0.0'
+def queryDslGenerated = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = queryDslGenerated
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+
+sourceSets {
+	main.java.srcDir queryDslGenerated
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+
+dependencies {
+	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion
+	implementation group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion
+}
+
+//build.doFirst {
+//	if ( file(queryDslGenerated).exists() )
+//		delete(file(queryDslGenerated))
+//}
+//
+//compileQuerydsl.doFirst {
+//	if ( file(queryDslGenerated).exists() )
+//		delete(file(queryDslGenerated))
+//}
+
+tasks.withType(JavaCompile) {
+	options.generatedSourceOutputDirectory = file(queryDslGenerated)
+}

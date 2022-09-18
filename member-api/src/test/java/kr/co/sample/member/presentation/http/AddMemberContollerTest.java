@@ -39,7 +39,7 @@ class AddMemberContollerTest {
     void member_should_be_created() throws Exception {
         this.mockMvc
                 .perform(
-                        post("/member")
+                        post("/member/v1/members")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .with(csrf())
                                 .content("{\"name\":\"rocksea\", \"age\":20}"))
@@ -52,7 +52,11 @@ class AddMemberContollerTest {
     @DisplayName("AddMember should be failed.")
     void add_member_should_be_failed() throws Exception {
         this.mockMvc
-                .perform(post("/member").contentType(MediaType.APPLICATION_JSON).with(csrf()).content(""))
+                .perform(
+                        post("/member/v1/members")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(csrf())
+                                .content(""))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }

@@ -8,21 +8,21 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sample.member.domain.Member;
 import kr.co.sample.member.domain.query.exception.MemberNotFoundException;
-import kr.co.sample.member.domain.repository.MemberRepository;
+import kr.co.sample.member.domain.repository.MemberReadRepository;
 
 @Service
 public class MemberQuery {
-    private final MemberRepository memberRepository;
+    private final MemberReadRepository memberReadRepository;
 
-    public MemberQuery(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public MemberQuery(MemberReadRepository memberReadRepository) {
+        this.memberReadRepository = memberReadRepository;
     }
 
     public MemberQueryResult getMemberById(Integer id) {
         Member member =
-                memberRepository
-                        .findById(id)
-                        .orElseThrow(() -> new MemberNotFoundException("회원이 존재하지 않습니다."));
+                memberReadRepository
+                        .findMemberById(id)
+                        .orElseThrow(() -> new MemberNotFoundException("멤버가 존재하지 않습니다."));
         MemberQueryResult memberQueryResult =
                 MemberQueryResult.builder()
                         .id(member.getId())

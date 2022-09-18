@@ -14,7 +14,7 @@ import kr.co.sample.member.domain.command.AddNewMember;
 import kr.co.sample.member.presentation.http.request.AddMemberParam;
 
 @RestController
-@RequestMapping(value = "/member")
+@RequestMapping(value = "/member/v1/members")
 public class AddMemberController {
     private final CommandHandler<AddNewMember> addNewMemberCommandHandler;
 

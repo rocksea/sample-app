@@ -38,7 +38,7 @@ class AddCouponContollerTest {
     void coupon_should_be_created() throws Exception {
         this.mockMvc
                 .perform(
-                        post("/coupon")
+                        post("/coupon/v1/coupons")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .with(csrf())
                                 .content(
@@ -56,7 +56,11 @@ class AddCouponContollerTest {
     @DisplayName("베이직쿠폰생성이 실패해야 한다.")
     void addCoupon_should_be_failed() throws Exception {
         this.mockMvc
-                .perform(post("/coupon").contentType(MediaType.APPLICATION_JSON).with(csrf()).content(""))
+                .perform(
+                        post("/coupon/v1/coupons")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(csrf())
+                                .content(""))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }

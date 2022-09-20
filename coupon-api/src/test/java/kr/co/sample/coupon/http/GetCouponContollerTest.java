@@ -47,7 +47,10 @@ class GetCouponContollerTest {
                 CouponQueryResult.builder().id(couponId).name("rocksea").build();
         when(couponQuery.getCouponById(couponId)).thenReturn(couponQueryResult);
         this.mockMvc
-                .perform(get("/coupon/" + couponId).contentType(MediaType.APPLICATION_JSON).with(csrf()))
+                .perform(
+                        get("/coupon/v1/coupons/" + couponId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(csrf()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -60,7 +63,7 @@ class GetCouponContollerTest {
         when(couponQuery.getCouponById(couponId)).thenThrow(CouponNotFoundException.class);
         this.mockMvc
                 .perform(
-                        get("/coupon/" + couponId)
+                        get("/coupon/v1/coupons/" + couponId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .with(csrf())
                                 .content(""))

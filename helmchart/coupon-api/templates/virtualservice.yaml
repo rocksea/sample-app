@@ -9,6 +9,8 @@ spec:
   - {{ .host | quote }}
   {{- end }}
   - "{{ $fullName }}.{{ .Release.Namespace }}.svc.cluster.local"
+  gateways:
+  - {{ $fullName }}
   http:
   - route:
     - destination:

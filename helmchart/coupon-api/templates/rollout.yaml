@@ -59,6 +59,24 @@ spec:
         - name: http
           containerPort: {{ .Values.image.port }}
           protocol: TCP
+        readinessProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+                path: /coupon/actuator/health/readiness
+                port: 80
+                scheme: HTTP
+            initialDelaySeconds: 200
+            periodSeconds: 5
+        livenessProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+                path: /coupon/actuator/health/liveness
+                port: 80
+                scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 5
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
         env:

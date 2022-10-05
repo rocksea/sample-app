@@ -14,13 +14,6 @@ spec:
           ingress: coupon-api
           #rootService: coupon-api
           servicePort: 80
-        istio:
-          virtualService:
-            name: {{ $fullName }}     # required
-          destinationRule:
-            name: {{ $fullName }}    # required
-            canarySubsetName: canary  # required
-            stableSubsetName: stable  # required
       analysis:
         templates:
         - templateName: success-rate
@@ -29,6 +22,9 @@ spec:
         - name: service-name
           value: {{ $fullName }}.{{ .Release.Namespace }}.svc.cluster.local
       steps:
+      - setCanaryScale:
+          weight: 100
+      - pause: {}
       - setWeight: 20
       - pause: {}
       - setWeight: 40
@@ -55,6 +51,7 @@ spec:
         securityContext:
           {{- toYaml .Values.securityContext | nindent 12 }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: IfNotPresent
         ports:
         - name: http
           containerPort: {{ .Values.image.port }}
@@ -64,18 +61,18 @@ spec:
             successThreshold: 1
             httpGet:
                 path: /coupon/actuator/health/readiness
-                port: 80
+                port: {{ .Values.image.port }}
                 scheme: HTTP
-            initialDelaySeconds: 200
+            initialDelaySeconds: 60
             periodSeconds: 5
         livenessProbe:
             failureThreshold: 3
             successThreshold: 1
             httpGet:
                 path: /coupon/actuator/health/liveness
-                port: 80
+                port: {{ .Values.image.port }}
                 scheme: HTTP
-            initialDelaySeconds: 90
+            initialDelaySeconds: 60
             periodSeconds: 5
         resources:
           {{- toYaml .Values.resources | nindent 12 }}

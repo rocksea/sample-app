@@ -8,5 +8,5 @@ data:
   dbPort: '3306'
   dbName: 'sample'
   dbDdlauto: 'update'
-  kafkaHost: 'sample-kafka-0.sample-kafka-headless.sample.svc.cluster.local'
+  kafkaHost: 'kafka-0.kafka-headless.dev.svc.cluster.local'
   kafkaPort: '9092'

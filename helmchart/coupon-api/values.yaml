@@ -54,11 +54,23 @@ ingress:
     alb.ingress.kubernetes.io/tags: environment=dev,owner=platform
     #alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /coupon/actuator/health
+    #alb.ingress.kubernetes.io/load-balancer-attributes: deletion_protection.enabled=true
+    alb.ingress.kubernetes.io/conditions.ab-test: >
+      [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Version", "values":["abtest"]}}]
+    alb.ingress.kubernetes.io/actions.ab-test: >
+      {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api-abtest","servicePort":"80"}]}}
     alb.ingress.kubernetes.io/actions.coupon-api: >
       {"type":"forward","forwardConfig":{"targetGroups":[{"serviceName":"coupon-api", "servicePort":"80","weight": 90},{"serviceName":"coupon-api-canary", "servicePort":"80","weight": 10}]}}
   hosts:
     - host: coupon.dev.rocksea.achromaticscenery.com
       paths:
+        - path: /coupon
+          pathType: Prefix
+          backend:
+            service:
+              name: ab-test
+              port:
+                name: use-annotation
         - path: /coupon
           pathType: Prefix
           backend:

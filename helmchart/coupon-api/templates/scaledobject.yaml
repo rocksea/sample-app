@@ -1,0 +1,40 @@
+{{- $fullName := include "coupon-api.fullname" . -}}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ $fullName }}
+spec:
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1     # Optional. Default: apps/v1
+    kind: Rollout                        # Optional. Default: Deployment
+    name: {{ $fullName }}                # Mandatory. Must be in the same namespace as the ScaledObject
+    #envSourceContainerName: coupon-api  # Optional. Default: .spec.template.spec.containers[0]
+  pollingInterval:  10                               # Optional. Default: 30 seconds
+  cooldownPeriod:   60                               # Optional. Default: 300 seconds
+  #idleReplicaCount: 0                               # Optional. Default: ignored, must be less than minReplicaCount
+  minReplicaCount:  0                                # Optional. Default: 0
+  maxReplicaCount:  10                               # Optional. Default: 100
+  fallback:                                          # Optional. Section to specify fallback options
+    failureThreshold: 3                              # Mandatory if fallback section is included
+    replicas: 7                                      # Mandatory if fallback section is included
+  advanced:                                          # Optional. Section to specify advanced options
+    restoreToOriginalReplicaCount: false             # Optional. Default: false
+    horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+      #name: {{ $fullName }}
+      behavior:                                      # Optional. Use to modify HPA's scaling behavior
+        scaleDown:
+          stabilizationWindowSeconds: 90
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 15
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: kafka-0.kafka-headless.dev.svc.cluster.local:9092
+      consumerGroup: coupon
+      topic: issue_coupon
+      lagThreshold: '5'
+      offsetResetPolicy: latest
+      #allowIdleConsumers: false
+      version: 1.0.0

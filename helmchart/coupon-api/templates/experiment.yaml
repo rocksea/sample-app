@@ -1,3 +1,4 @@
+{{- if .Values.abtesting.enabled }}
 {{- $fullName := include "coupon-api.fullname" . -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Experiment
@@ -104,3 +105,4 @@ spec:
                 configMapKeyRef:
                   name: {{ $fullName }}
                   key: kafkaPort
+{{- end }}

@@ -45,4 +45,6 @@ spec:
       name: http
   selector:
     {{- include "coupon-api.selectorLabels" . | nindent 4 }}
+    {{- if .Values.abtesting.enabled }}
     version: abtest
+    {{- end }}

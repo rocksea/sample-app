@@ -10,7 +10,7 @@ export ENV='dev'
 export HELM_EXPERIMENTAL_OCI=1 
 export ECR_PASS=`aws ecr get-login-password --region ap-northeast-2`
 export ARGOCD_PASS=`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo`
-export ARGOCD_URL='ac140c54269d04d44a8edaf79a0a9676-709231101.ap-northeast-2.elb.amazonaws.com'
+export ARGOCD_URL='localhost:8080'
 
 # Packaging Chart
 cat ${SERVICE_NAME}/values.template.yaml | envsubst > ${SERVICE_NAME}/values.yaml
